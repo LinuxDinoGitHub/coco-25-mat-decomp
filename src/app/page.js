@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import styles from "./page.module.css";
+import ModelHandler from "./ModelHandler";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { useState, useRef, useCallback, useEffect } from "react";
 
@@ -15,17 +16,17 @@ export default function Home() {
   const dropAreaRef = useRef(null);
   const outputBoxRef = useRef(null);
 
-  const processImage = (file) => {
-    if (!file) return;
+  // const processImage = (file) => {
+  //   if (!file) return;
     
-    setProcessing(true);
+  //   setProcessing(true);
 
-    // Linus: Make the function here
-    // The image should be the parameter file
-    // For displaying the content go to line 397
+  //   // Linus: Make the function here - no need
+  //   // The image should be the parameter file
+  //   // For displaying the content go to line 397
 
-    setProcessing(false); // After this line, the box will display
-  };
+  //   setProcessing(false); // After this line, the box will display
+  // };
 
   const handleFile = useCallback((file, source = "unknown") => {
     if (!file) {
@@ -42,7 +43,6 @@ export default function Home() {
     setSelectedFile(file);
     const fileUrl = URL.createObjectURL(file);
     setPreviewUrl(fileUrl);
-    processImage(file);
   }, []);
 
   const handleFileChange = (event) => {
@@ -392,9 +392,9 @@ export default function Home() {
             
             {outputContent ? (
               <div>
-                <div style={{ marginBottom: '20px' }}>
-                  <h4 style={{ margin: '0 0 10px 0', color: '#555' }}>Materials:</h4>
-                  {/* add stuff */}
+                <div style={{ marginBottom: '20px' , color: '#555' }}>
+                  <h4 style={{ margin: '0 0 10px 0'}}>Materials:</h4>
+                  {outputContent}
                 </div>
                 
                 <div style={{ 
@@ -465,6 +465,11 @@ export default function Home() {
           group name here
         </p>
       </div>
+      <ModelHandler 
+        setCoords={setOutputContent}
+        setLoading={setProcessing}
+        image={selectedFile}
+      />
     </div>
   );
 }
